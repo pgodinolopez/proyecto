@@ -12,5 +12,7 @@ public class TestCSV {
 		lista = LeerCSVCiudades.obtenerListaCiudadesCSV(path);
 		
 		System.out.println(lista.get(1).getNombreCiudad());
+		
+		
 	}
 }

@@ -14,9 +14,9 @@ import com.opencsv.CSVReaderBuilder;
 public class LeerCSVCiudades {
 	private static List<CiudadDTO> listaCiudades = new ArrayList<>();
 	
-	public static List<CiudadDTO> obtenerListaCiudadesCSV(String csvFilePath) {
+	public static List<CiudadDTO> obtenerListaCiudadesCSV(String csvPath) {
 	
-		try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
+		try (Reader reader = Files.newBufferedReader(Paths.get(csvPath));) {
 			
 			CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
 			
