@@ -10,7 +10,10 @@ import java.util.List;
 
 public class CiudadDAOImp implements CiudadDAO {
 	Connection conexion = Conexion.getConexion();
+	private String[] cabecera = {"id", "ciudad", "pais", "latitud", "longitud"};
+	private Object[][] datos;
 	
+
 	@Override
 	public List<CiudadDTO> listarCiudades() {
 		List<CiudadDTO> listaCiudades = new ArrayList<>();
@@ -141,5 +144,28 @@ public class CiudadDAOImp implements CiudadDAO {
 		
 		return resultado != 0;
 	}
+	
+	@Override
+	public void completarArrays(List<CiudadDTO> listaCiudades) {
+		datos = new Object[listaCiudades.size()][5];
+		int contador = 0;
+		for (CiudadDTO ciudadDTO : listaCiudades) {
+			datos[contador][0] = ciudadDTO.getIdCiudad();
+			datos[contador][1] = ciudadDTO.getNombreCiudad();
+			datos[contador][2] = ciudadDTO.getNombrePais();
+			datos[contador][3] = ciudadDTO.getLatitud();
+			datos[contador][4] = ciudadDTO.getLongitud();
+			contador++;
+		}
+	}
+	
+	public String[] getCabecera() {
+		return cabecera;
+	}
 
+	public Object[][] getDatos() {
+		return datos;
+	}
+
+	
 }

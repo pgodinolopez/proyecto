@@ -10,5 +10,5 @@ public interface CiudadDAO {
 	boolean actualizarCiudad(CiudadDTO ciudad);
 	boolean insertarCiudad(CiudadDTO ciudad);
 	boolean insertarListaCiudades(List<CiudadDTO> listaCiudades);
-	
+	void completarArrays(List<CiudadDTO> listaCiudades);
 }
