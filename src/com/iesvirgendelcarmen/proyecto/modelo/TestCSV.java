@@ -8,8 +8,8 @@ public class TestCSV {
 		String path = "datos/ciudades.csv";
 		
 		
-		List<CiudadDTO> lista = new ArrayList<>();
-		lista = LeerCSVCiudades.obtenerListaCiudadesCSV(path);
+		List<CiudadDTO> lista = LeerCSVCiudades.obtenerListaCiudadesCSV(path);
+		
 		
 		System.out.println(lista.get(1).getNombreCiudad());
 		

@@ -14,11 +14,15 @@ import javax.swing.JMenuItem;
 public class Vista {
 
 	private JFrame frame;
+	private JTable table;
+	private JMenuItem mntmCargarDatos;
+	private JScrollPane scrollPane;
+	private JTabbedPane tabbedPane;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -29,6 +33,10 @@ public class Vista {
 				}
 			}
 		});
+	}*/
+
+	public JMenuItem getMntmCargarDatos() {
+		return mntmCargarDatos;
 	}
 
 	/**
@@ -37,14 +45,17 @@ public class Vista {
 	public Vista() {
 		initialize();
 	}
-
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
+		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -52,14 +63,37 @@ public class Vista {
 		JMenu mnDatos = new JMenu("Datos");
 		menuBar.add(mnDatos);
 		
-		JMenuItem mntmCargarDatos = new JMenuItem("Cargar datos");
+		mntmCargarDatos = new JMenuItem("Cargar datos");
 		mnDatos.add(mntmCargarDatos);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.NORTH);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		tabbedPane.addTab("Tabla", null, scrollPane, null);
+		
+		table = new JTable();
+		
 	}
 
+	public JTable getTable() {
+		return table;
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+	
+	public JScrollPane getScrollPane() {
+		return scrollPane;
+	}
+
+	public JTabbedPane getTabbedPane() {
+		return tabbedPane;
+	}
+
+	public void setTabbedPane(JTabbedPane tabbedPane) {
+		this.tabbedPane = tabbedPane;
+	}
+	
 }
