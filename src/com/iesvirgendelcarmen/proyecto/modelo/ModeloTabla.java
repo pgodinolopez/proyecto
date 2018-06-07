@@ -1,21 +1,29 @@
 package com.iesvirgendelcarmen.proyecto.modelo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
 public class ModeloTabla extends AbstractTableModel {
-	
-	String[] cabecera;
 	Object[][] datos;
+	Object[] cabecera;
 	
-	
-	
-	public ModeloTabla(CiudadDAOImp ciudad) {
-		cabecera = ciudad.getCabecera();
-		datos = ciudad.getDatos();
+	public ModeloTabla(Object[][] datos, Object[] cabecera) {
+		this.datos = datos;
+		this.cabecera = cabecera;
+		
 	}
+
+	
+	
+	
+	
+	
+	
+
+	
 
 	//String path = "datos/ciudades.csv";
 	
@@ -45,7 +53,7 @@ public class ModeloTabla extends AbstractTableModel {
 	@Override
 	public String getColumnName(int column) {
 		// TODO Auto-generated method stub
-		return cabecera[column];
+		return (String) cabecera[column];
 	}
 
 	@Override

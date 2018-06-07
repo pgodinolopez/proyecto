@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
@@ -18,12 +19,17 @@ import com.iesvirgendelcarmen.proyecto.modelo.LeerCSVCiudades;
 import com.iesvirgendelcarmen.proyecto.modelo.ModeloTabla;
 import com.iesvirgendelcarmen.proyecto.vista.Vista;
 
-public class Controlador implements ActionListener, TableModelListener {
+public class Controlador implements ActionListener {
 	private Vista vista;
 	private String path=".";
 	CiudadDAOImp manipularCiudades = new CiudadDAOImp();
-	private List<CiudadDTO> listaCiudades;
+	private List<CiudadDTO> listaCiudades = manipularCiudades.listarCiudades();
 	LeerCSVCiudades leerCSV = new LeerCSVCiudades();
+	private Object[][] datos;
+	private Object[] cabecera = {"id", "ciudad", "pais", "latitud", "logitud"};
+	private ModeloTabla mtTable;
+	private JTable table;
+	private JScrollPane scrollPane;
 
 
 
@@ -51,65 +57,68 @@ public class Controlador implements ActionListener, TableModelListener {
 	}
 
 	private boolean lanzarEleccionFichero() {
-		JFileChooser jFileChooser = new JFileChooser("./datos");
-		int resultado = jFileChooser.showOpenDialog(vista.getFrame());
-		if (resultado == jFileChooser.APPROVE_OPTION) {
-			path = jFileChooser.getSelectedFile().getPath();
-			if(listaCiudades==null) {
+		
+			if(listaCiudades.size() == 0) {
+				JFileChooser jFileChooser = new JFileChooser("./datos");
+				int resultado = jFileChooser.showOpenDialog(vista.getFrame());
+				if (resultado == jFileChooser.APPROVE_OPTION) {
+				path = jFileChooser.getSelectedFile().getPath();
 				listaCiudades = leerCSV.obtenerListaCiudadesCSV(path);
-
+		
 			}
-
+			}
+			vista.getMntmCargarDatos().setEnabled(false);
+			datos = new Object[listaCiudades.size()][5];
+			
+			for (int i = 0; i <listaCiudades.size(); i++) {
+				datos[i][0] = listaCiudades.get(i).getIdCiudad();
+				datos[i][1] = listaCiudades.get(i).getNombreCiudad();
+				datos[i][2] = listaCiudades.get(i).getNombrePais();
+				datos[i][3] = listaCiudades.get(i).getLatitud();
+				datos[i][4] = listaCiudades.get(i).getLongitud();
+			}
+			
+			mtTable = new ModeloTabla(datos, cabecera);
+			table = new JTable(mtTable);
+			scrollPane = new JScrollPane(table);
+			vista.getTabbedPane().addTab("Tabla", null, scrollPane, null);
+			
+		//	vista.getScrollPane().add(new JButton("hola"));
+			table.setFillsViewportHeight(true);
+			
 			if(manipularCiudades.listarCiudades().size()<=0) {
 				manipularCiudades.crearBaseDeDatos();
 				manipularCiudades.insertarListaCiudades(listaCiudades);
 				manipularCiudades.completarArrays(listaCiudades);
 			}
 
-			for (CiudadDTO ciudadDTO : listaCiudades) {
-
-			}
+		/*	for (CiudadDTO ciudadDTO : listaCiudades) {
+				*
+			}*/
 			//System.out.println("Tamaño lista " + listaLenguajes.size());
 			//System.out.println("Tamaño conjunto " + conjutoLenguajes.size());
 
 
 
-			vista.getTable().setEnabled(true);
+		//	vista.getTable().setEnabled(true);
+
+
+		///	vista.getMntmCargarDatos().setEnabled(true);
+		//	JScrollPane scrollPane = new JScrollPane(vista.getTable(),JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+
+			//	pintarDatosTabla();
 			//ModeloTabla mtTabla = new ModeloTabla(manipularCiudades);
 			//JTable jtable = new JTable(mtTabla);
 			//jtable.getModel().addTableModelListener(this);
-			//vista.getScrollPane().setViewportView(jtable);
-			vista.getMntmCargarDatos().setEnabled(true);
-			JScrollPane scrollPane = new JScrollPane(vista.getTable(),JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-			pintarDatosTabla();
-		}
+		
 		return true;
-		
+
 
 	}
 
-	@Override
-	public void tableChanged(TableModelEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void pintarDatosTabla() {
-		List<CiudadDTO> listaCiudades = manipularCiudades.listarCiudades();
-		manipularCiudades.completarArrays(listaCiudades);
-		DefaultTableModel mode1 = new DefaultTableModel(manipularCiudades.getDatos(), manipularCiudades.getCabecera()) {
-			
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				// TODO Auto-generated method stub
-				return column > 0;
-			}
 
 
-		};
-		vista.getTable().setModel(mode1);
-		
-	}
 
 }

@@ -14,7 +14,7 @@ import javax.swing.JMenuItem;
 public class Vista {
 
 	private JFrame frame;
-	private JTable table;
+//	private JTable table;
 	private JMenuItem mntmCargarDatos;
 	private JScrollPane scrollPane;
 	private JTabbedPane tabbedPane;
@@ -68,17 +68,17 @@ public class Vista {
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.NORTH);
+	//	table = new JTable();
+	/*	scrollPane = new JScrollPane();
+		tabbedPane.addTab("Tabla", null, scrollPane, null);*/
 		
-		scrollPane = new JScrollPane();
-		tabbedPane.addTab("Tabla", null, scrollPane, null);
 		
-		table = new JTable();
 		
 	}
 
-	public JTable getTable() {
+/*	public JTable getTable() {
 		return table;
-	}
+	}*/
 
 	public JFrame getFrame() {
 		return frame;
