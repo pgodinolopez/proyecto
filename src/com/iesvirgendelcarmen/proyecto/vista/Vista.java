@@ -148,10 +148,13 @@ public class Vista {
 		tabbedPane.addTab("Tabla", null, scrollPane, null);*/
 		btnAnadirDatos = new JButton("Anadir datos");
 		panelBotones.add(btnAnadirDatos);
+		btnAnadirDatos.setEnabled(false);
 		btnBorrarDatos = new JButton("Borrar datos");
 		panelBotones.add(btnBorrarDatos);
+		btnBorrarDatos.setEnabled(false);
 		btnActualizarDatos = new JButton("Actualizar datos");
 		panelBotones.add(btnActualizarDatos);
+		btnActualizarDatos.setEnabled(false);
 		
 	}
 
