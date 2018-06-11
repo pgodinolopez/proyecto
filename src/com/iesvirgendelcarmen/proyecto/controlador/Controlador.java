@@ -42,6 +42,7 @@ public class Controlador implements ActionListener {
 	private void registrarComponentes() {
 		vista.getMntmCargarDatos().addActionListener(this);
 		vista.getBtnAnadirDatos().addActionListener(this);
+		vista.getBtnBorrarDatos().addActionListener(this);
 	}
 
 	@Override
@@ -67,7 +68,10 @@ public class Controlador implements ActionListener {
 				System.out.println("pulsado " + textoBoton);
 				annadirDatos();
 				break;
-
+			case "Borrar datos":
+				System.out.println("pulsado " + textoBoton);
+				borrarFila();
+				break;	
 			default:
 				break;
 			}
@@ -80,9 +84,30 @@ public class Controlador implements ActionListener {
 
 
 
+	private void borrarFila() {
+		int id;
+		String ciudad;
+		String pais;
+		double latitud;
+		double longitud;
+		
+		if(table.getRowCount()>0) {
+			if(table.getSelectedRowCount()>0) {
+				int filaSeleccionada = table.getSelectedRow();
+				id = (int) table.getValueAt(filaSeleccionada, 0);
+				ciudad = (String) table.getValueAt(filaSeleccionada, 1);
+				pais = (String) table.getValueAt(filaSeleccionada, 2);
+				latitud = (double) table.getValueAt(filaSeleccionada, 3);
+				longitud = (double) table.getValueAt(filaSeleccionada, 4);
+				
+				CiudadDTO ciudadABorrar = new CiudadDTO(id, ciudad, pais, latitud, longitud);
+				manipularCiudades.borrarCiudad(ciudadABorrar);
+			}
+		}
+	}
+
 	private void annadirDatos() {
 
-		//	int resultado = JOptionPane.showConfirmDialog(null, textFields, "Añadir datos", JOptionPane.OK_CANCEL_OPTION);
 		CiudadDTO ciudad = new CiudadDTO(Integer.parseInt(vista.getTextFieldID().getText()), vista.getTextFieldCiudad().getText(), vista.getTextFieldPais().getText(), Double.parseDouble(vista.getTextFieldLatitud().getText()), Double.parseDouble(vista.getTextFieldLongitud().getText()));
 		manipularCiudades.insertarCiudad(ciudad);
 		

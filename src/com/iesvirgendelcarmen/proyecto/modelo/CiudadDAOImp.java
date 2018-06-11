@@ -54,13 +54,18 @@ public class CiudadDAOImp implements CiudadDAO {
 	}
 
 	@Override
-	public boolean borrarCiudad(String nombreCiudad, String nombrePais) {
+	public boolean borrarCiudad(CiudadDTO ciudad) {
 		int resultado = 0;
-		String sql = "DELETE FROM ciudades WHERE ciudad = ? AND pais = ?;";
+		//String sql = "DELETE FROM ciudades WHERE ciudad = ? AND pais = ?;";
+		String sql = "DELETE FROM ciudades WHERE id = ? AND ciudad = ? AND pais = ? AND latitud = ? AND longitud = ?;";
 		try (PreparedStatement preparedStatement = conexion.prepareStatement(sql);) {
 			
-			preparedStatement.setString(1, nombreCiudad);
-			preparedStatement.setString(2, nombrePais);
+			preparedStatement.setInt(1, ciudad.getIdCiudad());
+			preparedStatement.setString(2, ciudad.getNombreCiudad());
+			preparedStatement.setString(3, ciudad.getNombrePais());
+			preparedStatement.setDouble(4, ciudad.getLatitud());
+			preparedStatement.setDouble(5, ciudad.getLongitud());
+			
 			resultado = preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

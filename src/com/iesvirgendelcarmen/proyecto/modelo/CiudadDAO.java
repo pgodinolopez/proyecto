@@ -6,7 +6,7 @@ public interface CiudadDAO {
 	
 	List<CiudadDTO> listarCiudades();
 	boolean crearBaseDeDatos();
-	boolean borrarCiudad(String nombreCiudad, String nombrePais);
+	boolean borrarCiudad(CiudadDTO ciudad);
 	boolean actualizarCiudad(CiudadDTO ciudad);
 	boolean insertarCiudad(CiudadDTO ciudad);
 	boolean insertarListaCiudades(List<CiudadDTO> listaCiudades);
