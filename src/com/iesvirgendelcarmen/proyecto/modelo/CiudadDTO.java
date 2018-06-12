@@ -53,6 +53,32 @@ public class CiudadDTO {
 		return "CiudadesDTO [idCiudad=" + idCiudad + ", nombreCiudad=" + nombreCiudad + ", nombrePais=" + nombrePais
 				+ ", latitud=" + latitud + ", longitud=" + longitud + "]";
 	}
+
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idCiudad;
+		return result;
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CiudadDTO other = (CiudadDTO) obj;
+		if (idCiudad != other.idCiudad)
+			return false;
+		return true;
+	}
 	
 	
 	

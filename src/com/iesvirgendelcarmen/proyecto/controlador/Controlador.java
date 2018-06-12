@@ -11,9 +11,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.event.TableModelEvent;
+import javax.swing.JTextField;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableModel;
 
 import com.iesvirgendelcarmen.proyecto.modelo.CiudadDAOImp;
 import com.iesvirgendelcarmen.proyecto.modelo.CiudadDTO;
@@ -29,7 +28,7 @@ public class Controlador implements ActionListener {
 	LeerCSVCiudades leerCSV = new LeerCSVCiudades();
 	private Object[][] datos;
 	private Object[] cabecera = {"id", "ciudad", "pais", "latitud", "logitud"};
-	private ModeloTabla mtTable;
+	private static ModeloTabla mtTable;
 	private JTable table;
 	private JScrollPane scrollPane;
 
@@ -69,10 +68,12 @@ public class Controlador implements ActionListener {
 			case "Anadir datos":
 				System.out.println("pulsado " + textoBoton);
 				annadirDatos();
+				
 				break;
 			case "Borrar datos":
 				System.out.println("pulsado " + textoBoton);
 				borrarFila();
+				
 				break;
 
 			case "Actualizar datos":
@@ -138,26 +139,30 @@ public class Controlador implements ActionListener {
 	}
 
 	private void annadirDatos() {
+		JTextField id = new JTextField();
+		JTextField ciudad = new JTextField();
+		JTextField pais = new JTextField();
+		JTextField latitud = new JTextField();
+		JTextField longitud = new JTextField();
+		Object[] mensaje = {
+				"ID", id,
+				"Ciudad", ciudad,
+				"Pais", pais,
+				"Latitud", latitud,
+				"Longitud", longitud
+		};
+		int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Nueva ciudad", JOptionPane.OK_CANCEL_OPTION);
 
-		CiudadDTO ciudad = new CiudadDTO(Integer.parseInt(vista.getTextFieldID().getText()), vista.getTextFieldCiudad().getText(), vista.getTextFieldPais().getText(), Double.parseDouble(vista.getTextFieldLatitud().getText()), Double.parseDouble(vista.getTextFieldLongitud().getText()));
-		manipularCiudades.insertarCiudad(ciudad);
-		
-		for (int i = 0; i <listaCiudades.size(); i++) {
-			datos[i][0] = listaCiudades.get(i).getIdCiudad();
-			datos[i][1] = listaCiudades.get(i).getNombreCiudad();
-			datos[i][2] = listaCiudades.get(i).getNombrePais();
-			datos[i][3] = listaCiudades.get(i).getLatitud();
-			datos[i][4] = listaCiudades.get(i).getLongitud();
+		if(opcion==JOptionPane.OK_OPTION) {
+			CiudadDTO ciudadACrear = new CiudadDTO(Integer.parseInt(id.getText()), ciudad.getText(), pais.getText(), Double.parseDouble(latitud.getText()), Double.parseDouble(longitud.getText()));
+			
+			manipularCiudades.insertarCiudad(ciudadACrear);			
+			JOptionPane.showMessageDialog(null, "Ciudad insertada correctamente");
+			mtTable.fireTableDataChanged();
+			
+		} else {
+			JOptionPane.showMessageDialog(null, "Operacion cancelada");
 		}
-
-		mtTable = new ModeloTabla(datos, cabecera);
-		table = new JTable(mtTable);
-		scrollPane = new JScrollPane(table);
-		vista.getTabbedPane().addTab("Tabla", null, scrollPane, null);
-
-		//	vista.getScrollPane().add(new JButton("hola"));
-		table.setFillsViewportHeight(true);
-
 	}
 
 	private boolean lanzarEleccionFichero() {
@@ -190,24 +195,24 @@ public class Controlador implements ActionListener {
 		vista.getTabbedPane().addTab("Tabla", null, panelTablas, null);
 		JPanel panelBotones = new JPanel();
 		
-		
+
 		panelBotones.add(vista.getBtnAnadirDatos());
-		
+
 		//JButton btnBorrarDatosTabla = new JButton("Borrar datos");
 		panelBotones.add(vista.getBtnBorrarDatos());
-		
+
 		//JButton btnActualizarDatosTabla = new JButton("Actualizar datos");
 		panelBotones.add(vista.getBtnActualizarDatos());
-		
+
 		panelTablas.add(panelBotones);
-		
-		
+
+
 		//	vista.getScrollPane().add(new JButton("hola"));
 		table.setFillsViewportHeight(true);
 		vista.getBtnActualizarDatos().setEnabled(true);
 		vista.getBtnAnadirDatos().setEnabled(true);
 		vista.getBtnBorrarDatos().setEnabled(true);
-		
+
 		if(manipularCiudades.listarCiudades().size()<=0) {
 			manipularCiudades.crearBaseDeDatos();
 			manipularCiudades.insertarListaCiudades(listaCiudades);
@@ -240,7 +245,5 @@ public class Controlador implements ActionListener {
 
 	}
 
-
-
-
+	
 }
