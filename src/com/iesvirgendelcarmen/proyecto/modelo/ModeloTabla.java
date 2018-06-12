@@ -67,9 +67,8 @@ public class ModeloTabla extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		System.out.println(aValue.toString());
-		System.out.println(datos[rowIndex][columnIndex]);
+		datos[rowIndex][columnIndex] = aValue;
+        fireTableCellUpdated(rowIndex, columnIndex);
 	}
 	
 }

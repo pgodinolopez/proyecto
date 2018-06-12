@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
@@ -93,12 +94,21 @@ public class Controlador implements ActionListener {
 
 	private void actualizarFila() {
 		int id;
+		String ciudad;
+		String pais;
+		double latitud;
+		double longitud;
 
 		if(table.getRowCount()>0) {
 			if(table.getSelectedRowCount()>0) {
 				int filaSeleccionada = table.getSelectedRow();
 				id = (int) table.getValueAt(filaSeleccionada, 0);
-				CiudadDTO ciudadActualizar = new CiudadDTO(id, vista.getTextFieldCiudad().getText(), vista.getTextFieldPais().getText(), Double.parseDouble(vista.getTextFieldLatitud().getText()), Double.parseDouble(vista.getTextFieldLongitud().getText()));
+				ciudad = (String) table.getValueAt(filaSeleccionada, 1);
+				pais = (String) table.getValueAt(filaSeleccionada, 2);
+				latitud = (double) table.getValueAt(filaSeleccionada, 3);
+				longitud = (double) table.getValueAt(filaSeleccionada, 4);
+
+				CiudadDTO ciudadActualizar = new CiudadDTO(id, ciudad, pais, latitud, longitud);
 				manipularCiudades.actualizarCiudad(ciudadActualizar);
 			}
 		}
@@ -122,6 +132,7 @@ public class Controlador implements ActionListener {
 
 				CiudadDTO ciudadABorrar = new CiudadDTO(id, ciudad, pais, latitud, longitud);
 				manipularCiudades.borrarCiudad(ciudadABorrar);
+				mtTable.fireTableDataChanged();
 			}
 		}
 	}
@@ -172,10 +183,25 @@ public class Controlador implements ActionListener {
 		}
 
 		mtTable = new ModeloTabla(datos, cabecera);
+		JPanel panelTablas = new JPanel();
 		table = new JTable(mtTable);
 		scrollPane = new JScrollPane(table);
-		vista.getTabbedPane().addTab("Tabla", null, scrollPane, null);
-
+		panelTablas.add(scrollPane);
+		vista.getTabbedPane().addTab("Tabla", null, panelTablas, null);
+		JPanel panelBotones = new JPanel();
+		
+		
+		panelBotones.add(vista.getBtnAnadirDatos());
+		
+		//JButton btnBorrarDatosTabla = new JButton("Borrar datos");
+		panelBotones.add(vista.getBtnBorrarDatos());
+		
+		//JButton btnActualizarDatosTabla = new JButton("Actualizar datos");
+		panelBotones.add(vista.getBtnActualizarDatos());
+		
+		panelTablas.add(panelBotones);
+		
+		
 		//	vista.getScrollPane().add(new JButton("hola"));
 		table.setFillsViewportHeight(true);
 		vista.getBtnActualizarDatos().setEnabled(true);
@@ -191,8 +217,8 @@ public class Controlador implements ActionListener {
 		/*	for (CiudadDTO ciudadDTO : listaCiudades) {
 		 *
 		}*/
-		//System.out.println("Tamaño lista " + listaLenguajes.size());
-		//System.out.println("Tamaño conjunto " + conjutoLenguajes.size());
+		//System.out.println("Tamano lista " + listaLenguajes.size());
+		//System.out.println("Tamano conjunto " + conjutoLenguajes.size());
 
 
 

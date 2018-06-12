@@ -77,7 +77,7 @@ public class Vista {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 500, 500);
+		frame.setBounds(100, 100, 500, 510);
 		frame.setResizable(false);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -147,14 +147,14 @@ public class Vista {
 	/*	scrollPane = new JScrollPane();
 		tabbedPane.addTab("Tabla", null, scrollPane, null);*/
 		btnAnadirDatos = new JButton("Anadir datos");
-		panelBotones.add(btnAnadirDatos);
-		btnAnadirDatos.setEnabled(false);
+		//panelBotones.add(btnAnadirDatos);
+		//btnAnadirDatos.setEnabled(false);
 		btnBorrarDatos = new JButton("Borrar datos");
-		panelBotones.add(btnBorrarDatos);
-		btnBorrarDatos.setEnabled(false);
+		//panelBotones.add(btnBorrarDatos);
+		//btnBorrarDatos.setEnabled(false);
 		btnActualizarDatos = new JButton("Actualizar datos");
-		panelBotones.add(btnActualizarDatos);
-		btnActualizarDatos.setEnabled(false);
+		//panelBotones.add(btnActualizarDatos);
+		//btnActualizarDatos.setEnabled(false);
 		
 	}
 
