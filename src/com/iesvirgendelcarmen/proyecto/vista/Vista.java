@@ -79,6 +79,7 @@ public class Vista {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 500, 550);
 		frame.setResizable(false);
+		frame.setTitle("Proyecto de programacion");
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

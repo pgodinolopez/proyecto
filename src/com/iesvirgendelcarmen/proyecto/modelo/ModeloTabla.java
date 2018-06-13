@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
 public class ModeloTabla extends AbstractTableModel {
@@ -99,7 +101,7 @@ public class ModeloTabla extends AbstractTableModel {
         manipularCiudades.borrarCiudad(ciudadBorrar);
         List<CiudadDTO> listaCiudades = manipularCiudades.listarCiudades();
         
-        /*datos = new Object[listaCiudades.size()][5];
+        datos = new Object[listaCiudades.size()][5];
         
 		for (int i = 0; i <listaCiudades.size(); i++) {
 			datos[i][0] = listaCiudades.get(i).getIdCiudad();
@@ -107,17 +109,52 @@ public class ModeloTabla extends AbstractTableModel {
 			datos[i][2] = listaCiudades.get(i).getNombrePais();
 			datos[i][3] = listaCiudades.get(i).getLatitud();
 			datos[i][4] = listaCiudades.get(i).getLongitud();
-		}*/
-        for (int i = row; i < contador; i++) {
-			datos[i][0] = datos[i+1][0];
-			datos[i][1] = datos[i+1][1]; 
-			datos[i][2] = datos[i+1][2];
-			datos[i][3] = datos[i+1][3];
-			datos[i][4] = datos[i+1][4];
 		}
+        
 		
 		fireTableDataChanged();
 
+	}
+	public void annadirDatos() {
+		JTextField id = new JTextField();
+		JTextField ciudad = new JTextField();
+		JTextField pais = new JTextField();
+		JTextField latitud = new JTextField();
+		JTextField longitud = new JTextField();
+		Object[] mensaje = {
+				"ID", id,
+				"Ciudad", ciudad,
+				"Pais", pais,
+				"Latitud", latitud,
+				"Longitud", longitud
+		};
+		int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Nueva ciudad", JOptionPane.OK_CANCEL_OPTION);
+
+		if(opcion==JOptionPane.OK_OPTION) {
+			
+			CiudadDTO ciudadACrear = new CiudadDTO(Integer.parseInt(id.getText()), ciudad.getText(), pais.getText(), Double.parseDouble(latitud.getText()), Double.parseDouble(longitud.getText()));
+			
+			manipularCiudades.insertarCiudad(ciudadACrear);			
+			
+			List<CiudadDTO> listaCiudades = manipularCiudades.listarCiudades();
+	        
+	        datos = new Object[listaCiudades.size()][5];
+	        
+			for (int i = 0; i <listaCiudades.size(); i++) {
+				datos[i][0] = listaCiudades.get(i).getIdCiudad();
+				datos[i][1] = listaCiudades.get(i).getNombreCiudad();
+				datos[i][2] = listaCiudades.get(i).getNombrePais();
+				datos[i][3] = listaCiudades.get(i).getLatitud();
+				datos[i][4] = listaCiudades.get(i).getLongitud();
+			}
+			
+			JOptionPane.showMessageDialog(null, "Ciudad insertada correctamente");
+			
+			
+		} else {
+			JOptionPane.showMessageDialog(null, "Operacion cancelada");
+		}
+		fireTableDataChanged();
 	}
 	
 }

@@ -67,7 +67,7 @@ public class Controlador implements ActionListener {
 			switch (textoBoton) {
 			case "Anadir datos":
 				System.out.println("pulsado " + textoBoton);
-				annadirDatos();
+				mtTable.annadirDatos();
 				
 				break;
 			case "Borrar datos":
@@ -140,32 +140,7 @@ public class Controlador implements ActionListener {
 		}
 	}
 
-	private void annadirDatos() {
-		JTextField id = new JTextField();
-		JTextField ciudad = new JTextField();
-		JTextField pais = new JTextField();
-		JTextField latitud = new JTextField();
-		JTextField longitud = new JTextField();
-		Object[] mensaje = {
-				"ID", id,
-				"Ciudad", ciudad,
-				"Pais", pais,
-				"Latitud", latitud,
-				"Longitud", longitud
-		};
-		int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Nueva ciudad", JOptionPane.OK_CANCEL_OPTION);
-
-		if(opcion==JOptionPane.OK_OPTION) {
-			CiudadDTO ciudadACrear = new CiudadDTO(Integer.parseInt(id.getText()), ciudad.getText(), pais.getText(), Double.parseDouble(latitud.getText()), Double.parseDouble(longitud.getText()));
-			
-			manipularCiudades.insertarCiudad(ciudadACrear);			
-			JOptionPane.showMessageDialog(null, "Ciudad insertada correctamente");
-			mtTable.fireTableDataChanged();
-			
-		} else {
-			JOptionPane.showMessageDialog(null, "Operacion cancelada");
-		}
-	}
+	
 
 	private boolean lanzarEleccionFichero() {
 
