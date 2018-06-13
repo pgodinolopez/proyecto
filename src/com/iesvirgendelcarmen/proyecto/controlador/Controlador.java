@@ -43,7 +43,7 @@ public class Controlador implements ActionListener {
 		vista.getMntmCargarDatos().addActionListener(this);
 		vista.getBtnAnadirDatos().addActionListener(this);
 		vista.getBtnBorrarDatos().addActionListener(this);
-		vista.getBtnActualizarDatos().addActionListener(this);
+		//vista.getBtnActualizarDatos().addActionListener(this);
 	}
 
 	@Override
@@ -76,10 +76,10 @@ public class Controlador implements ActionListener {
 				
 				break;
 
-			case "Actualizar datos":
+			/*case "Actualizar datos":
 				System.out.println("pulsado " + textoBoton);
 				actualizarFila();
-				break;
+				break;*/
 
 			default:
 				break;
@@ -93,7 +93,7 @@ public class Controlador implements ActionListener {
 
 
 
-	private void actualizarFila() {
+	/*private void actualizarFila() {
 		int id;
 		String ciudad;
 		String pais;
@@ -106,14 +106,14 @@ public class Controlador implements ActionListener {
 				id = (int) table.getValueAt(filaSeleccionada, 0);
 				ciudad = (String) table.getValueAt(filaSeleccionada, 1);
 				pais = (String) table.getValueAt(filaSeleccionada, 2);
-				latitud = (double) table.getValueAt(filaSeleccionada, 3);
+				latitud =  (double) table.getValueAt(filaSeleccionada, 3);
 				longitud = (double) table.getValueAt(filaSeleccionada, 4);
 
 				CiudadDTO ciudadActualizar = new CiudadDTO(id, ciudad, pais, latitud, longitud);
 				manipularCiudades.actualizarCiudad(ciudadActualizar);
 			}
 		}
-	}
+	}*/
 
 	private void borrarFila() {
 		int id;
@@ -124,7 +124,7 @@ public class Controlador implements ActionListener {
 
 		if(table.getRowCount()>0) {
 			if(table.getSelectedRowCount()>0) {
-				int filaSeleccionada = table.getSelectedRow();
+				/*int filaSeleccionada = table.getSelectedRow();
 				id = (int) table.getValueAt(filaSeleccionada, 0);
 				ciudad = (String) table.getValueAt(filaSeleccionada, 1);
 				pais = (String) table.getValueAt(filaSeleccionada, 2);
@@ -133,7 +133,9 @@ public class Controlador implements ActionListener {
 
 				CiudadDTO ciudadABorrar = new CiudadDTO(id, ciudad, pais, latitud, longitud);
 				manipularCiudades.borrarCiudad(ciudadABorrar);
-				mtTable.fireTableDataChanged();
+				mtTable.fireTableDataChanged();*/
+				int filaSeleccionada = table.getSelectionModel().getMinSelectionIndex();
+				mtTable.deleteRow(filaSeleccionada);
 			}
 		}
 	}
@@ -202,7 +204,7 @@ public class Controlador implements ActionListener {
 		panelBotones.add(vista.getBtnBorrarDatos());
 
 		//JButton btnActualizarDatosTabla = new JButton("Actualizar datos");
-		panelBotones.add(vista.getBtnActualizarDatos());
+		//panelBotones.add(vista.getBtnActualizarDatos());
 
 		panelTablas.add(panelBotones);
 

@@ -1,6 +1,8 @@
+
 import java.awt.EventQueue;
 
 import com.iesvirgendelcarmen.proyecto.controlador.Controlador;
+
 import com.iesvirgendelcarmen.proyecto.vista.Vista;
 
 public class Principal {
