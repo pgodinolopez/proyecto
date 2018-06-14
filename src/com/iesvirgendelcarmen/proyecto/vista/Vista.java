@@ -26,6 +26,7 @@ public class Vista {
 	private JTabbedPane tabbedPane;
 	private JMenu mnDatos;
 	private JMenuBar menuBar;
+	private JMenuItem menuItemAcercaDe;
 	private JButton btnAnadirDatos;
 	private JButton btnBorrarDatos;
 	private JButton btnActualizarDatos;
@@ -93,6 +94,12 @@ public class Vista {
 		
 		mntmCargarDatos = new JMenuItem("Cargar datos");
 		mnDatos.add(mntmCargarDatos);
+		
+		JMenu mnAcercaDe = new JMenu("Acerca de");
+		menuBar.add(mnAcercaDe);
+		
+		menuItemAcercaDe = new JMenuItem("Acerca de");
+		mnAcercaDe.add(menuItemAcercaDe);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
@@ -253,6 +260,15 @@ public class Vista {
 	public JTextField getTextFieldLongitud() {
 		return textFieldLongitud;
 	}
+
+	public JMenuItem getMenuItemAcercaDe() {
+		return menuItemAcercaDe;
+	}
+
+	public JPanel getPanelBotones() {
+		return panelBotones;
+	}
+	
 	
 	
 }

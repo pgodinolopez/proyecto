@@ -27,7 +27,7 @@ public class Controlador implements ActionListener {
 	private List<CiudadDTO> listaCiudades = manipularCiudades.listarCiudades();
 	LeerCSVCiudades leerCSV = new LeerCSVCiudades();
 	private Object[][] datos;
-	private Object[] cabecera = {"id", "ciudad", "pais", "latitud", "logitud"};
+	private Object[] cabecera = {"id", "ciudad", "pais", "latitud", "longitud"};
 	private static ModeloTabla mtTable;
 	private JTable table;
 	private JScrollPane scrollPane;
@@ -43,6 +43,7 @@ public class Controlador implements ActionListener {
 		vista.getMntmCargarDatos().addActionListener(this);
 		vista.getBtnAnadirDatos().addActionListener(this);
 		vista.getBtnBorrarDatos().addActionListener(this);
+		vista.getMenuItemAcercaDe().addActionListener(this);
 		//vista.getBtnActualizarDatos().addActionListener(this);
 	}
 
@@ -56,6 +57,8 @@ public class Controlador implements ActionListener {
 			//identificamos el jmenuitem que genera el evento
 			if (menuItem.getText().equals("Cargar datos"))
 				lanzarEleccionFichero();
+			else if (menuItem.getText().equals("Acerca de"))
+				desplegarInformacion();
 
 		}
 
@@ -68,15 +71,15 @@ public class Controlador implements ActionListener {
 			case "Anadir datos":
 				System.out.println("pulsado " + textoBoton);
 				mtTable.annadirDatos();
-				
+
 				break;
 			case "Borrar datos":
 				System.out.println("pulsado " + textoBoton);
 				borrarFila();
-				
+
 				break;
 
-			/*case "Actualizar datos":
+				/*case "Actualizar datos":
 				System.out.println("pulsado " + textoBoton);
 				actualizarFila();
 				break;*/
@@ -89,38 +92,15 @@ public class Controlador implements ActionListener {
 
 	}
 
+	private void desplegarInformacion() {
+		JOptionPane jpJOptionPane = new JOptionPane();
+		jpJOptionPane.showMessageDialog(vista.getFrame(), 
+				"Creado por PJGL", "Información autor",
+				JOptionPane.INFORMATION_MESSAGE);
 
-
-
-
-	/*private void actualizarFila() {
-		int id;
-		String ciudad;
-		String pais;
-		double latitud;
-		double longitud;
-
-		if(table.getRowCount()>0) {
-			if(table.getSelectedRowCount()>0) {
-				int filaSeleccionada = table.getSelectedRow();
-				id = (int) table.getValueAt(filaSeleccionada, 0);
-				ciudad = (String) table.getValueAt(filaSeleccionada, 1);
-				pais = (String) table.getValueAt(filaSeleccionada, 2);
-				latitud =  (double) table.getValueAt(filaSeleccionada, 3);
-				longitud = (double) table.getValueAt(filaSeleccionada, 4);
-
-				CiudadDTO ciudadActualizar = new CiudadDTO(id, ciudad, pais, latitud, longitud);
-				manipularCiudades.actualizarCiudad(ciudadActualizar);
-			}
-		}
-	}*/
+	}
 
 	private void borrarFila() {
-		int id;
-		String ciudad;
-		String pais;
-		double latitud;
-		double longitud;
 
 		if(table.getRowCount()>0) {
 			if(table.getSelectedRowCount()>0) {
@@ -140,7 +120,7 @@ public class Controlador implements ActionListener {
 		}
 	}
 
-	
+
 
 	private boolean lanzarEleccionFichero() {
 
@@ -171,7 +151,7 @@ public class Controlador implements ActionListener {
 		panelTablas.add(scrollPane);
 		vista.getTabbedPane().addTab("Tabla", null, panelTablas, null);
 		JPanel panelBotones = new JPanel();
-		
+
 
 		panelBotones.add(vista.getBtnAnadirDatos());
 
@@ -222,5 +202,5 @@ public class Controlador implements ActionListener {
 
 	}
 
-	
+
 }
