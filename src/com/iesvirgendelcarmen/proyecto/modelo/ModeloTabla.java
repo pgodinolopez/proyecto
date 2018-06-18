@@ -140,7 +140,7 @@ public class ModeloTabla extends AbstractTableModel {
 					}
 				}
 				if (resultado) {
-					JOptionPane.showMessageDialog(null, "No se ha podido insertar la ciudad");
+					JOptionPane.showMessageDialog(null, "El ID introducido ya existe");
 				} else {
 
 

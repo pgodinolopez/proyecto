@@ -3,6 +3,7 @@ package com.iesvirgendelcarmen.proyecto.vista;
 import java.awt.EventQueue;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import java.awt.BorderLayout;
@@ -44,24 +45,18 @@ public class Vista {
 	private JLabel lblLongitud;
 	private JTextField textFieldLongitud;
 	private JPanel panelBotones;
+	private JButton botonMenos10;
+	private JButton botonMenos1;
+	private JButton botonMas1;
+	private JButton botonMas10;
+	private JPanel panelFiltros;
+	private JComboBox<String> comboBoxCiudad;
+	private JPanel panelFiltros1;
+	private JComboBox<String> comboBoxPais;
+	private JPanel panelBotonesIzda;
+	private JButton botonBuscar;
+	private JButton botonReset;
 	
-	
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Vista window = new Vista();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
-
 	public JMenuItem getMntmCargarDatos() {
 		return mntmCargarDatos;
 	}
@@ -109,6 +104,37 @@ public class Vista {
 		
 		panelIzquierdo = new JPanel();
 		splitPane.setLeftComponent(panelIzquierdo);
+		panelIzquierdo.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		panelFiltros = new JPanel();
+		panelIzquierdo.add(panelFiltros);
+		
+		JLabel lblCiudad1 = new JLabel("Ciudad");
+		panelFiltros.add(lblCiudad1);
+		
+		panelFiltros1 = new JPanel();
+		panelIzquierdo.add(panelFiltros1);
+		
+		comboBoxCiudad = new JComboBox<String>();
+		comboBoxCiudad.setEnabled(false);
+		panelFiltros.add(comboBoxCiudad);
+		
+		JLabel lblPais1 = new JLabel("Pais");
+		panelFiltros1.add(lblPais1);
+		comboBoxPais = new JComboBox<String>();
+		comboBoxPais.setEnabled(false);
+		panelFiltros1.add(comboBoxPais);
+		
+		panelBotonesIzda = new JPanel();
+		panelIzquierdo.add(panelBotonesIzda);
+		
+		botonBuscar = new JButton("Buscar");
+		panelBotonesIzda.add(botonBuscar);
+		
+		botonReset = new JButton("Reset");
+		panelBotonesIzda.add(botonReset);
+		botonBuscar.setEnabled(false);
+		botonReset.setEnabled(false);
 		
 		panelDerecho = new JPanel();
 		splitPane.setRightComponent(panelDerecho);
@@ -151,24 +177,32 @@ public class Vista {
 		
 		panelBotones = new JPanel();
 		panelDerecho.add(panelBotones);
-	//	table = new JTable();
-	/*	scrollPane = new JScrollPane();
-		tabbedPane.addTab("Tabla", null, scrollPane, null);*/
+		
+		botonMenos10 = new JButton("<<");
+		panelBotones.add(botonMenos10);
+		botonMenos10.setEnabled(false);
+		
+		botonMenos1 = new JButton("<");
+		panelBotones.add(botonMenos1);
+		botonMenos1.setEnabled(false);
+		
+		botonMas1 = new JButton(">");
+		panelBotones.add(botonMas1);
+		botonMas1.setEnabled(false);
+		
+		botonMas10 = new JButton(">>");
+		panelBotones.add(botonMas10);
+		botonMas10.setEnabled(false);
+		
 		btnAnadirDatos = new JButton("Anadir datos");
-		//panelBotones.add(btnAnadirDatos);
-		//btnAnadirDatos.setEnabled(false);
+		
 		btnBorrarDatos = new JButton("Borrar datos");
-		//panelBotones.add(btnBorrarDatos);
-		//btnBorrarDatos.setEnabled(false);
+		
 		btnActualizarDatos = new JButton("Actualizar datos");
-		//panelBotones.add(btnActualizarDatos);
-		//btnActualizarDatos.setEnabled(false);
+		
 		
 	}
 
-/*	public JTable getTable() {
-		return table;
-	}*/
 
 	public JFrame getFrame() {
 		return frame;
@@ -267,6 +301,50 @@ public class Vista {
 
 	public JPanel getPanelBotones() {
 		return panelBotones;
+	}
+
+	public JButton getBotonMenos10() {
+		return botonMenos10;
+	}
+
+	public JButton getBotonMenos1() {
+		return botonMenos1;
+	}
+
+	public JButton getBotonMas1() {
+		return botonMas1;
+	}
+
+	public JButton getBotonMas10() {
+		return botonMas10;
+	}
+
+	public JPanel getPanelFiltros() {
+		return panelFiltros;
+	}
+
+	public JComboBox<String> getComboBoxCiudad() {
+		return comboBoxCiudad;
+	}
+
+	public JPanel getPanelFiltros1() {
+		return panelFiltros1;
+	}
+
+	public JComboBox<String> getComboBoxPais() {
+		return comboBoxPais;
+	}
+
+	public JPanel getPanelBotonesIzda() {
+		return panelBotonesIzda;
+	}
+
+	public JButton getBotonBuscar() {
+		return botonBuscar;
+	}
+
+	public JButton getBotonReset() {
+		return botonReset;
 	}
 	
 	

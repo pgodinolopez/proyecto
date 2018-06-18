@@ -2,7 +2,10 @@ package com.iesvirgendelcarmen.proyecto.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -11,9 +14,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.event.TableModelListener;
-
 import com.iesvirgendelcarmen.proyecto.modelo.CiudadDAOImp;
 import com.iesvirgendelcarmen.proyecto.modelo.CiudadDTO;
 import com.iesvirgendelcarmen.proyecto.modelo.LeerCSVCiudades;
@@ -31,7 +31,10 @@ public class Controlador implements ActionListener {
 	private static ModeloTabla mtTable;
 	private JTable table;
 	private JScrollPane scrollPane;
-
+	private int contador = 0;
+	private Set<String> conjutoCiudades = new HashSet<>();
+	private Set<String> conjutoPaises = new HashSet<>();
+	List<CiudadDTO> listaReset = new ArrayList<>();
 
 
 	public Controlador(Vista vista) {
@@ -39,12 +42,39 @@ public class Controlador implements ActionListener {
 		registrarComponentes();
 	}
 
+	private void colocarFormularioCiudad(int i, List<CiudadDTO> lista) {
+
+		if(listaCiudades.size()>0) {
+			vista.getTextFieldID().setText(
+					listaCiudades.get(i).getIdCiudad()+"");
+			vista.getTextFieldCiudad().setText(
+					listaCiudades.get(i).getNombreCiudad());
+			vista.getTextFieldPais().setText(
+					listaCiudades.get(i).getNombrePais()+"");
+			vista.getTextFieldLatitud().setText(
+					listaCiudades.get(i).getLatitud()+"");
+			vista.getTextFieldLongitud().setText(
+					listaCiudades.get(i).getLongitud()+"");
+
+		}
+
+	}
+
+
 	private void registrarComponentes() {
+
 		vista.getMntmCargarDatos().addActionListener(this);
+		vista.getMenuItemAcercaDe().addActionListener(this);
+
 		vista.getBtnAnadirDatos().addActionListener(this);
 		vista.getBtnBorrarDatos().addActionListener(this);
-		vista.getMenuItemAcercaDe().addActionListener(this);
-		//vista.getBtnActualizarDatos().addActionListener(this);
+		vista.getBotonMas1().addActionListener(this);
+		vista.getBotonMas10().addActionListener(this);
+		vista.getBotonMenos1().addActionListener(this);
+		vista.getBotonMenos10().addActionListener(this);
+		vista.getBotonBuscar().addActionListener(this);
+		vista.getBotonReset().addActionListener(this);
+
 	}
 
 	@Override
@@ -79,15 +109,69 @@ public class Controlador implements ActionListener {
 
 				break;
 
-				/*case "Actualizar datos":
+			case ">":
 				System.out.println("pulsado " + textoBoton);
-				actualizarFila();
-				break;*/
+				contador++;
 
+				break;
+
+			case ">>":
+				System.out.println("pulsado " + textoBoton);
+				contador+=10;
+
+				break;	
+
+			case "<":
+				System.out.println("pulsado " + textoBoton);
+				contador--;
+
+				break;
+
+			case "<<":
+				System.out.println("pulsado " + textoBoton);
+				contador-=10;
+
+				break;	
+
+			case "Buscar":
+				List<CiudadDTO> listaFiltrada = new ArrayList<>();
+
+				String ciudad = (String) vista.getComboBoxCiudad().getSelectedItem();
+				String pais = (String) vista.getComboBoxPais().getSelectedItem();
+				
+				if(ciudad.equals("")&&pais.equals("")) {
+					JOptionPane.showMessageDialog(null, "Debes introducir al menos un parametro de busqueda");
+				} else {
+				for (CiudadDTO ciudad1 : listaCiudades) {
+					
+					if ((ciudad1.getNombreCiudad().equals(ciudad) ||
+							ciudad1.getNombrePais().equals(pais))) {
+						listaFiltrada.add(ciudad1);
+					}
+				}
+				listaCiudades = listaFiltrada;
+				contador = 0;
+				
+				}
+				break;	
+
+			case "Reset" :
+				listaCiudades = listaReset;
+				contador = 0;
+				break;	
 			default:
 				break;
 			}
-
+			if(listaCiudades.size()>=1) {
+			contador = contador % listaCiudades.size();
+			contador %= listaCiudades.size();  
+			if (contador < 0)
+				contador += listaCiudades.size();
+			colocarFormularioCiudad(contador, listaCiudades);
+			} else {
+				JOptionPane.showMessageDialog(null, "La ciudad especificada no existe");
+			}
+			
 		}
 
 	}
@@ -95,7 +179,7 @@ public class Controlador implements ActionListener {
 	private void desplegarInformacion() {
 		JOptionPane jpJOptionPane = new JOptionPane();
 		jpJOptionPane.showMessageDialog(vista.getFrame(), 
-				"Creado por PJGL", "InformaciÃ³n autor",
+				"Creado por Pedro Javier Godino Lopez 1º DAM", "Informacion autor",
 				JOptionPane.INFORMATION_MESSAGE);
 
 	}
@@ -155,16 +239,10 @@ public class Controlador implements ActionListener {
 
 		panelBotones.add(vista.getBtnAnadirDatos());
 
-		//JButton btnBorrarDatosTabla = new JButton("Borrar datos");
 		panelBotones.add(vista.getBtnBorrarDatos());
-
-		//JButton btnActualizarDatosTabla = new JButton("Actualizar datos");
-		//panelBotones.add(vista.getBtnActualizarDatos());
 
 		panelTablas.add(panelBotones);
 
-
-		//	vista.getScrollPane().add(new JButton("hola"));
 		table.setFillsViewportHeight(true);
 		vista.getBtnActualizarDatos().setEnabled(true);
 		vista.getBtnAnadirDatos().setEnabled(true);
@@ -176,26 +254,29 @@ public class Controlador implements ActionListener {
 			manipularCiudades.completarArrays(listaCiudades);
 		}
 
-		/*	for (CiudadDTO ciudadDTO : listaCiudades) {
-		 *
-		}*/
-		//System.out.println("Tamano lista " + listaLenguajes.size());
-		//System.out.println("Tamano conjunto " + conjutoLenguajes.size());
+		for (CiudadDTO ciudad : listaCiudades) {
+			conjutoCiudades.add(ciudad.getNombreCiudad());
+			conjutoPaises.add(ciudad.getNombrePais());
+			listaReset.add(ciudad);
+		}
 
-
-
-		//	vista.getTable().setEnabled(true);
-
-
-		///	vista.getMntmCargarDatos().setEnabled(true);
-		//	JScrollPane scrollPane = new JScrollPane(vista.getTable(),JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-
-		//	pintarDatosTabla();
-		//ModeloTabla mtTabla = new ModeloTabla(manipularCiudades);
-		//JTable jtable = new JTable(mtTabla);
-		//jtable.getModel().addTableModelListener(this);
-
+		vista.getComboBoxCiudad().addItem("");
+		for (String string : conjutoCiudades) {
+			vista.getComboBoxCiudad().addItem(string);
+		}
+		vista.getComboBoxPais().addItem("");
+		for (String string : conjutoPaises) {
+			vista.getComboBoxPais().addItem(string);
+		}
+		colocarFormularioCiudad(contador, listaCiudades);
+		vista.getBotonMas1().setEnabled(true);
+		vista.getBotonMas10().setEnabled(true);
+		vista.getBotonMenos1().setEnabled(true);
+		vista.getBotonMenos10().setEnabled(true);
+		vista.getBotonReset().setEnabled(true);
+		vista.getBotonBuscar().setEnabled(true);
+		vista.getComboBoxCiudad().setEnabled(true);
+		vista.getComboBoxPais().setEnabled(true);
 
 		return true;
 
