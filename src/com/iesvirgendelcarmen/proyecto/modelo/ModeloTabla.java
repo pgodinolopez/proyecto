@@ -12,7 +12,7 @@ public class ModeloTabla extends AbstractTableModel {
 	CiudadDAOImp manipularCiudades = new CiudadDAOImp();
 	Object[][] datos;
 	Object[] cabecera;
-	List<CiudadDTO> listaCiudades = manipularCiudades.listarCiudades();
+	
 
 	public ModeloTabla(Object[][] datos, Object[] cabecera) {
 		this.datos = datos;
@@ -132,7 +132,7 @@ public class ModeloTabla extends AbstractTableModel {
 
 
 				boolean resultado = false;
-
+				List<CiudadDTO> listaCiudades = manipularCiudades.listarCiudades();
 				for (CiudadDTO ciudad1 : listaCiudades) {
 					if(id.getText().equals(ciudad1.getIdCiudad()+"")) {
 

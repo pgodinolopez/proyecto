@@ -28,6 +28,7 @@ public class Vista {
 	private JMenu mnDatos;
 	private JMenuBar menuBar;
 	private JMenuItem menuItemAcercaDe;
+	private JMenuItem menuItemSalir;
 	private JButton btnAnadirDatos;
 	private JButton btnBorrarDatos;
 	private JButton btnActualizarDatos;
@@ -89,6 +90,9 @@ public class Vista {
 		
 		mntmCargarDatos = new JMenuItem("Cargar datos");
 		mnDatos.add(mntmCargarDatos);
+		
+		menuItemSalir = new JMenuItem("Salir");
+		mnDatos.add(menuItemSalir);
 		
 		JMenu mnAcercaDe = new JMenu("Acerca de");
 		menuBar.add(mnAcercaDe);
@@ -345,6 +349,10 @@ public class Vista {
 
 	public JButton getBotonReset() {
 		return botonReset;
+	}
+
+	public JMenuItem getMenuItemSalir() {
+		return menuItemSalir;
 	}
 	
 	

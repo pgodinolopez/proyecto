@@ -65,7 +65,8 @@ public class Controlador implements ActionListener {
 
 		vista.getMntmCargarDatos().addActionListener(this);
 		vista.getMenuItemAcercaDe().addActionListener(this);
-
+		vista.getMenuItemSalir().addActionListener(this);
+		
 		vista.getBtnAnadirDatos().addActionListener(this);
 		vista.getBtnBorrarDatos().addActionListener(this);
 		vista.getBotonMas1().addActionListener(this);
@@ -89,7 +90,8 @@ public class Controlador implements ActionListener {
 				lanzarEleccionFichero();
 			else if (menuItem.getText().equals("Acerca de"))
 				desplegarInformacion();
-
+			else
+				salirAplicacion();
 		}
 
 		//agruparemos jbutton
@@ -174,6 +176,10 @@ public class Controlador implements ActionListener {
 			
 		}
 
+	}
+
+	private void salirAplicacion() {
+		System.exit(0);
 	}
 
 	private void desplegarInformacion() {
